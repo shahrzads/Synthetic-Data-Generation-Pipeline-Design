@@ -6,16 +6,19 @@ Frameworks used for synthetic dataset generation and response generation: **open
 **Synthetic Dataset Generation Procedure**:
 
 1. Load the initial dataset from huggingfce and extract its questions
-2. Preprocess the data including converting to lower case and removing punctuations (refer to the codebase for mo details)
+2. Preprocess the data including converting to lower case and removing punctuations (refer to the codebase for more details)
+   - In text generation tasks like synthetic data generation and response generation, lemmatization might not be beneficial, because preserving the diversity of word forms is important for generating natural and fluent text.
 3. Construct a prompt to modify a given question.
    - This function is responsible for creating a prompt. The prompt is a combination of the input question and a modification instruction of the question based on its structure and information.
 4. Use OpenAI's api to generate synthetic questions based on the generated prompt in the previous step.
 5. Save the generated synthetic dataset (`questions.csv`).
 
 **Automatic Response Generation**
+
 Since the goal is to generate responses for supervised fine-tuning of LLMs via Direct Policy Optimization (DPO), the final output should contain question, chosen response, and rejected response columns. So, for each question, we need both correct and incorrect responses. The `generate_response` function is responsible for generating the responses (either correct or incorrect), based on the passed boolean parameter `chosen`. The response is generated based on the prompt that asks OpenAI api to generate a correct/incorrect response for the given question.
 
 Finally, all the questions and their corresponding chosen/rejected responses are saved in a file (`questions_and_responses.csv`)
+
 
 
 ## Quality Evaluation of the Generated Questions and Responses
@@ -23,6 +26,7 @@ Evaluating the quality of synthetically generated questions and their correspond
 1. **Linguistic Quality**
    - **Fluency**: Access grammatical correctness and logical flow
    - **Coherence**: Ensure the responses logically align with the questions
+  
   
 2. **Domain-Specific Accuracy**
    - **Factual Accuracy**: Ensure the responses contain medically accurate and current information
@@ -62,3 +66,7 @@ Adaptation strategies to handle changes in the domain:
 2. **Domain-Specific Metrics**: Develop evaluation metrics that reflect the specific requirements of the new domain
 3. **Collaborate with Experts**: Work with domain experts during development and evaluation to ensure relevance and accuracy
 
+
+## Lessons Learned and Next Steps
+- Using frameworks [Cosmopedia](https://github.com/huggingface/cosmopedia/tree/main/generation) and [llm-swarm](https://github.com/huggingface/llm-swarm/tree/loubna/examples/textbooks) can assist in having a more scalable model, as Cosmopedia dataset consists of 25 billion tokens.
+- After adjusting the initial huggingface dataset and the LLM model to use, the above-mentioned framework needs `slurm` to run successfully. Providing such services can increase the scalability and efficiency of the model, while `slurm` requires specific hardware systems, and not all machines have it.
