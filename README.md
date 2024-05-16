@@ -111,5 +111,3 @@ The following lessons were noticed while executing multiple experiments.
 
 - Furthermore, there was an effort to employ Mistral; however, it could not be utilized due to its associated costs.
 
-- 
-```
