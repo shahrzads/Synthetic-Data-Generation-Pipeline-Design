@@ -69,4 +69,4 @@ Adaptation strategies to handle changes in the domain:
 
 ## Lessons Learned and Next Steps
 - Using frameworks [Cosmopedia](https://github.com/huggingface/cosmopedia/tree/main/generation) and [llm-swarm](https://github.com/huggingface/llm-swarm/tree/loubna/examples/textbooks) can assist in having a more scalable model, as Cosmopedia dataset consists of 25 billion tokens.
-- After adjusting the initial huggingface dataset and the LLM model to use, the above-mentioned framework needs `slurm` to run successfully. Providing such services can increase the scalability and efficiency of the model, while `slurm` requires specific hardware systems, and not all machines have it.
+- After adjusting the initial huggingface dataset and the LLM model to use, the above-mentioned framework needs `slurm` to run successfully. Providing such services can increase the scalability, efficiency, and ease of use for synthetic data generation, while `slurm` requires specific hardware systems, and not all machines have it.
