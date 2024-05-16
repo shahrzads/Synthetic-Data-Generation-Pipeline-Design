@@ -1,5 +1,23 @@
 # Synthetic-Data-Generation-Pipeline-Design
 
+## Pipeline Workflow
+Frameworks used for synthetic dataset generation and response generation: **openai, huggingface, pandas**
+
+**Synthetic Dataset Generation Procedure**:
+
+1. Load the initial dataset from huggingfce and extract its questions
+2. Preprocess the data including converting to lower case and removing punctuations (refer to the codebase for mo details)
+3. Construct a prompt to modify a given question.
+   - This function is responsible for creating a prompt. The prompt is a combination of the input question and a modification instruction of the question based on its structure and information.
+4. Use OpenAI's api to generate synthetic questions based on the generated prompt in the previous step.
+5. Save the generated synthetic dataset (`questions.csv`).
+
+**Automatic Response Generation**
+Since the goal is to generate responses for supervised fine-tuning of LLMs via Direct Policy Optimization (DPO), the final output should contain question, chosen response, and rejected response columns. So, for each question, we need both correct and incorrect responses. The `generate_response` function is responsible for generating the responses (either correct or incorrect), based on the passed boolean parameter `chosen`. The response is generated based on the prompt that asks OpenAI api to generate a correct/incorrect response for the given question.
+
+Finally, all the questions and their corresponding chosen/rejected responses are saved in a file (`questions_and_responses.csv`)
+
+
 ## Quality Evaluation of the Generated Questions and Responses
 Evaluating the quality of synthetically generated questions and their corresponding responses (chosen and rejected), especially in a specialized domain like healthcare, requires careful consideration of both linguistic quality and domain-specific accuracy. Here are some metrics and criteria that can help to assess the effectiveness of the generated dataset:
 1. **Linguistic Quality**
